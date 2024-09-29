@@ -1,31 +1,43 @@
 import React, { useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import {getAuth,signInWithEmailAndPassword} from "firebase/auth";
-import { auth } from 'Config.jsx';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import {signInWithEmailAndPassword} from "firebase/auth";
+import { auth } from '../Config';
+
+
+
 
 
 const Login = () => {
+  
 const email =useRef()
 const  password = useRef()
 const navigate =useNavigate()
 
-function login(event){
-  event.preventDefault
-}
-  // const auth = getAuth();
-  signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+// function Login(event){
+//   event.preventDefault
+// }
+  //  const auth = getAuth();
+  function receivedData(event){
+    event.preventDefault()
+    signInWithEmailAndPassword(auth, email.current.value, password.current.value)
     .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      navigate(Home)
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
+     // Signed in 
+     const user = userCredential.user;
+     console.log(user);
+     navigate(`/Home`)
+   })
+   .catch((error) => {
+     const errorCode = error.code;
+   const errorMessage = error.message;
     });
 
 
-  
+
+  }
+ 
+
+     
+     
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-8 max-w-sm w-full">
@@ -37,13 +49,13 @@ function login(event){
             </label>
             <input
               type="email"
-            
+              
               ref={email}
-
+              
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
               required
               placeholder="you@example.com"
-            />
+              />
           </div>
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700" htmlFor="password">
@@ -51,7 +63,7 @@ function login(event){
             </label>
             <input
               type="password"
-             
+              
               ref={password}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
               required
@@ -61,14 +73,14 @@ function login(event){
           <div className="form-control mt-6"> 
 
           </div>
-          <button
+          <button onClick={receivedData} 
            
-          >
-            <Link to="home">Login</Link>  
+          >submit
+             {/* <h1><Link to='Home'>Login</Link></h1>  */}
           </button>
         </form>
         <p className="mt-4 text-sm text-center text-gray-600">
-          Don't have an account? <a href="#" className="text-blue-600 hover:underline">Sign up</a>
+          Don't have an account? <a href="Register" className="text-blue-600 hover:underline">Sign up</a>
         </p>
       </div>
     </div>

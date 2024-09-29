@@ -1,27 +1,33 @@
 import React, { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from 'Config.jsx';
+import { auth } from '../Config';
+
+
 
 const Register = () => {
 const email = useRef()
 const password = useRef()
 const navigate =useNavigate()
+function ragisterData(event){
+event.preventDefault()
 
   createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
   .then((userCredential) => {
     // Signed up 
     const user = userCredential.user;
-
-    navigate(Register)
+console.log(user);
+    navigate(`/`)
   })
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
+    console.log(error);
+    
     // ..
   });
 
-
+}
 
 
 
@@ -40,7 +46,7 @@ const navigate =useNavigate()
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500"
               ref={email}
-              type="text"
+              type="email"
               placeholder="Enter your email"
               required
             />
@@ -58,7 +64,7 @@ const navigate =useNavigate()
             />
           </div>
           <div className="flex items-center justify-between">
-            <button
+            <button onClick={ragisterData}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
